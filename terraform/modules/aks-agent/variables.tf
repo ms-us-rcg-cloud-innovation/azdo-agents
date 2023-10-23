@@ -27,12 +27,20 @@ variable "azdo_personal_access_token" {
   type      = string
 }
 
+variable "azdo_agent_pool_name" {
+  type = string
+}
+
+variable "azdo_org_url" {
+  type = string
+}
+
 variable "agent_name" {
-    type = string
-    default = "azdo-agent"
+  type    = string
+  default = "azdo-agent"
 }
 
 variable "agent_image" {
-    type = string
-    default = "mcr."  
+  type    = string
+  default = "mcr."
 }

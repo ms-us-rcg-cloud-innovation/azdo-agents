@@ -33,3 +33,8 @@ variable "agent_image_context_git_repo_url" {
   type    = string
   default = "https://github.com/ms-us-rcg-cloud-innovation/azdo-agents#main:docker"
 }
+
+variable "agent_image" {
+  type    = string
+  default = "agentshu3ks6f9.azurecr.io/azdo-agent:linux-ca3"
+}

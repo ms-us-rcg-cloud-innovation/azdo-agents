@@ -11,18 +11,19 @@ resource "random_string" "name" {
   upper   = false
 }
 
-module "aks" {
-  source              = "./modules/aks"
-  dns_prefix          = "${random_pet.prefix.id}-aks"
-  location            = azurerm_resource_group.azdo_agents.location
-  resource_group_name = azurerm_resource_group.azdo_agents.name
-}
-
 module "acr" {
   source              = "./modules/acr"
   name                = "agents${random_string.name.result}"
   location            = azurerm_resource_group.azdo_agents.location
   resource_group_name = azurerm_resource_group.azdo_agents.name
+}
+
+module "aks" {
+  source                      = "./modules/aks"
+  dns_prefix                  = "${random_pet.prefix.id}-aks"
+  location                    = azurerm_resource_group.azdo_agents.location
+  resource_group_name         = azurerm_resource_group.azdo_agents.name
+  azure_container_registry_id = module.acr.container_registry_id
 }
 
 module "agent_image_linux" {
@@ -47,6 +48,6 @@ module "aks_agent_linux" {
   azdo_personal_access_token = var.azure_devops_personal_access_token
   azdo_agent_pool_name       = var.azdo_agent_pool_name
   azdo_org_url               = var.azdo_org_url
-  agent_image                = ""
+  agent_image                = var.agent_image
   agent_name                 = "azdo-agent"
 }
